@@ -55,21 +55,58 @@ Future<void> initDependencies() async {
   final networkInfo = NetworkInfoImpl();
   Get.put<NetworkInfo>(networkInfo);
 
-  // Auth DataSource
+  // InputConverter
+  final inputConverter = InputConverter();
+  Get.put<InputConverter>(inputConverter);
+
+  // DataSources
   final authDataSource = AuthDataSourceImpl(
     client: apiClient,
     sharedPreferences: sharedPreferences,
   );
   Get.put<AuthDataSource>(authDataSource);
 
-  // Auth Repository
+  final storeDataSource = StoreDataSourceImpl(
+    client: apiClient,
+  );
+  Get.put<StoreDataSource>(storeDataSource);
+
+  final mobileDataSource = MobileDataSourceImpl(
+    client: apiClient,
+  );
+  Get.put<MobileDataSource>(mobileDataSource);
+
+  final supportDataSource = SupportDataSourceImpl(
+    client: apiClient,
+  );
+  Get.put<SupportDataSource>(supportDataSource);
+
+  // Repositories
   final authRepository = AuthRepository(
     dataSource: authDataSource,
     networkInfo: networkInfo,
   );
   Get.put(authRepository);
 
-  // Casos de uso de Auth
+  final storeRepository = StoreRepository(
+    dataSource: storeDataSource,
+    networkInfo: networkInfo,
+  );
+  Get.put(storeRepository);
+
+  final mobileRepository = MobileRepository(
+    dataSource: mobileDataSource,
+    networkInfo: networkInfo,
+  );
+  Get.put(mobileRepository);
+
+  final supportRepository = SupportRepository(
+    dataSource: supportDataSource,
+    networkInfo: networkInfo,
+  );
+  Get.put(supportRepository);
+
+  // UseCases - Auth
   final loginUseCase = LoginUseCase(
     repository: authRepository,
     networkInfo: networkInfo,
@@ -81,12 +118,101 @@ Future<void> initDependencies() async {
   );
   Get.put(logoutUseCase);
 
-  // Controladores
+  // UseCases - Store
+  final getStoresUseCase = GetStoresUseCase(
+    repository: storeRepository,
+  );
+  Get.put(getStoresUseCase);
+
+  final createStoreUseCase = CreateStoreUseCase(
+    repository: storeRepository,
+  );
+  Get.put(createStoreUseCase);
+
+  final updateStoreUseCase = UpdateStoreUseCase(
+    repository: storeRepository,
+  );
+  Get.put(updateStoreUseCase);
+
+  final deleteStoreUseCase = DeleteStoreUseCase(
+    repository: storeRepository,
+  );
+  Get.put(deleteStoreUseCase);
+
+  // UseCases - Mobile
+  final getMobileUsersUseCase = GetMobileUsersUseCase(
+    repository: mobileRepository,
+  );
+  Get.put(getMobileUsersUseCase);
+
+  final createMobileUserUseCase = CreateMobileUserUseCase(
+    repository: mobileRepository,
+  );
+  Get.put(createMobileUserUseCase);
+
+  final updateMobileUserUseCase = UpdateMobileUserUseCase(
+    repository: mobileRepository,
+  );
+  Get.put(updateMobileUserUseCase);
+
+  final deleteMobileUserUseCase = DeleteMobileUserUseCase(
+    repository: mobileRepository,
+  );
+  Get.put(deleteMobileUserUseCase);
+
+  // UseCases - Support
+  final getSupportUsersUseCase = GetSupportUsersUseCase(
+    repository: supportRepository,
+  );
+  Get.put(getSupportUsersUseCase);
+
+  final createSupportUserUseCase = CreateSupportUserUseCase(
+    repository: supportRepository,
+  );
+  Get.put(createSupportUserUseCase);
+
+  final updateSupportUserUseCase = UpdateSupportUserUseCase(
+    repository: supportRepository,
+  );
+  Get.put(updateSupportUserUseCase);
+
+  final deleteSupportUserUseCase = DeleteSupportUserUseCase(
+    repository: supportRepository,
+  );
+  Get.put(deleteSupportUserUseCase);
+
+  // Controllers
   final authController = AuthController(
     loginUseCase: loginUseCase,
     logoutUseCase: logoutUseCase,
   );
   Get.put(authController);
+
+  final storesController = StoresController(
+    getStoresUseCase: getStoresUseCase,
+    createStoreUseCase: createStoreUseCase,
+    updateStoreUseCase: updateStoreUseCase,
+    deleteStoreUseCase: deleteStoreUseCase,
+    inputConverter: inputConverter,
+  );
+  Get.put(storesController);
+
+  final mobileController = MobileController(
+    getMobileUsersUseCase: getMobileUsersUseCase,
+    createMobileUserUseCase: createMobileUserUseCase,
+    updateMobileUserUseCase: updateMobileUserUseCase,
+    deleteMobileUserUseCase: deleteMobileUserUseCase,
+    getStoresUseCase: getStoresUseCase,
+  );
+  Get.put(mobileController);
+
+  final supportController = SupportController(
+    getSupportUsersUseCase: getSupportUsersUseCase,
+    createSupportUserUseCase: createSupportUserUseCase,
+    updateSupportUserUseCase: updateSupportUserUseCase,
+    deleteSupportUserUseCase: deleteSupportUserUseCase,
+  );
+  Get.put(supportController);
 }
 
 /// Widget principal do aplicativo
