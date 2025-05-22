@@ -11,10 +11,10 @@ class StoreListItem extends StatelessWidget {
   final InputConverter inputConverter = Get.find<InputConverter>();
 
   StoreListItem({
-    Key? key,
+    super.key,
     required this.store,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

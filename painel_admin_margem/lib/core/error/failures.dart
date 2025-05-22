@@ -15,9 +15,9 @@ class ServerFailure extends Failure {
   final int? statusCode;
 
   const ServerFailure({
-    required String message,
+    required super.message,
     this.statusCode,
-  }) : super(message: message);
+  });
 
   @override
   List<Object> get props => [message, statusCode ?? 0];
@@ -25,27 +25,25 @@ class ServerFailure extends Failure {
 
 /// Falha de cache
 class CacheFailure extends Failure {
-  const CacheFailure({required String message}) : super(message: message);
+  const CacheFailure({required super.message});
 }
 
 /// Falha de conexão
 class NetworkFailure extends Failure {
-  const NetworkFailure({String message = 'Sem conexão com a internet'})
-      : super(message: message);
+  const NetworkFailure({super.message = 'Sem conexão com a internet'});
 }
 
 /// Falha de autenticação
 class AuthenticationFailure extends Failure {
-  const AuthenticationFailure({String message = 'Falha na autenticação'})
-      : super(message: message);
+  const AuthenticationFailure({super.message = 'Falha na autenticação'});
 }
 
 /// Falha de validação
 class ValidationFailure extends Failure {
-  const ValidationFailure({required String message}) : super(message: message);
+  const ValidationFailure({required super.message});
 }
 
 /// Falha de dados inválidos
 class InvalidDataFailure extends Failure {
-  const InvalidDataFailure({required String message}) : super(message: message);
+  const InvalidDataFailure({required super.message});
 }

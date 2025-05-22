@@ -8,10 +8,10 @@ class SupportUserListItem extends StatelessWidget {
   final VoidCallback? onTap;
 
   const SupportUserListItem({
-    Key? key,
+    super.key,
     required this.user,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

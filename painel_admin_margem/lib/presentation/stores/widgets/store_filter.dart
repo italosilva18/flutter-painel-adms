@@ -8,10 +8,10 @@ class StoreFilter extends StatelessWidget {
   final VoidCallback? onAddStore;
 
   const StoreFilter({
-    Key? key,
+    super.key,
     required this.controller,
     this.onAddStore,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

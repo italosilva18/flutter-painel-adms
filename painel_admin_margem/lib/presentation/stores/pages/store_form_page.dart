@@ -10,7 +10,7 @@ import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/confirmation_dialog.dart';
 
 class StoreFormPage extends StatelessWidget {
-  const StoreFormPage({Key? key}) : super(key: key);
+  const StoreFormPage({super.key});
 
   @override
   Widget build(BuildContext context) {

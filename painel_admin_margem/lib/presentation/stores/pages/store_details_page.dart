@@ -7,7 +7,7 @@ import '../../../core/widgets/custom_button.dart';
 import '../../../core/utils/input_converter.dart';
 
 class StoreDetailsPage extends StatefulWidget {
-  const StoreDetailsPage({Key? key}) : super(key: key);
+  const StoreDetailsPage({super.key});
 
   @override
   State<StoreDetailsPage> createState() => _StoreDetailsPageState();

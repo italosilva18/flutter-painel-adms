@@ -2,44 +2,25 @@ import '../../../domain/entities/store.dart';
 
 class StoreModel extends Store {
   const StoreModel({
-    required String id,
-    required String company,
-    required String tradeName,
-    required String cnpj,
-    required String phone,
-    required String email,
-    required String serial,
-    required AddressModel address,
-    required String partner,
-    required double codePartner,
-    required String size,
-    required String segment,
-    required List<int> operation,
-    required bool active,
-    required ScannerModel scanner,
-    required bool offerta,
-    required bool oppinar,
-    required bool prazzo,
-  }) : super(
-          id: id,
-          company: company,
-          tradeName: tradeName,
-          cnpj: cnpj,
-          phone: phone,
-          email: email,
-          serial: serial,
-          address: address,
-          partner: partner,
-          codePartner: codePartner,
-          size: size,
-          segment: segment,
-          operation: operation,
-          active: active,
-          scanner: scanner,
-          offerta: offerta,
-          oppinar: oppinar,
-          prazzo: prazzo,
-        );
+    required super.id,
+    required super.company,
+    required super.tradeName,
+    required super.cnpj,
+    required super.phone,
+    required super.email,
+    required super.serial,
+    required AddressModel super.address,
+    required super.partner,
+    required super.codePartner,
+    required super.size,
+    required super.segment,
+    required super.operation,
+    required super.active,
+    required ScannerModel super.scanner,
+    required super.offerta,
+    required super.oppinar,
+    required super.prazzo,
+  });
 
   factory StoreModel.fromJson(Map<String, dynamic> json) {
     return StoreModel(
@@ -186,22 +167,14 @@ class StoreModel extends Store {
 
 class AddressModel extends Address {
   const AddressModel({
-    required String street,
-    required String number,
-    required String city,
-    required int cityCode,
-    required String state,
-    required int stateCode,
-    required String neighborhood,
-  }) : super(
-          street: street,
-          number: number,
-          city: city,
-          cityCode: cityCode,
-          state: state,
-          stateCode: stateCode,
-          neighborhood: neighborhood,
-        );
+    required super.street,
+    required super.number,
+    required super.city,
+    required super.cityCode,
+    required super.state,
+    required super.stateCode,
+    required super.neighborhood,
+  });
 
   factory AddressModel.fromEntity(Address entity) {
     return AddressModel(
@@ -230,14 +203,10 @@ class AddressModel extends Address {
 
 class ScannerModel extends Scanner {
   const ScannerModel({
-    required bool active,
-    required bool beta,
-    required int expire,
-  }) : super(
-          active: active,
-          beta: beta,
-          expire: expire,
-        );
+    required super.active,
+    required super.beta,
+    required super.expire,
+  });
 
   factory ScannerModel.fromEntity(Scanner entity) {
     return ScannerModel(

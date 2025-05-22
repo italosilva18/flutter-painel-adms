@@ -12,13 +12,13 @@ class StoreSelector extends StatefulWidget {
   final bool isLoading;
 
   const StoreSelector({
-    Key? key,
+    super.key,
     required this.stores,
     required this.selectedStores,
     required this.onStoreSelected,
     required this.onStoreRemoved,
     this.isLoading = false,
-  }) : super(key: key);
+  });
 
   @override
   State<StoreSelector> createState() => _StoreSelectorState();

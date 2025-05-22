@@ -8,7 +8,7 @@ import '../../../core/widgets/custom_text_field.dart';
 import '../../../core/widgets/confirmation_dialog.dart';
 
 class MobileUserStoresPage extends StatelessWidget {
-  const MobileUserStoresPage({Key? key}) : super(key: key);
+  const MobileUserStoresPage({super.key});
 
   @override
   Widget build(BuildContext context) {

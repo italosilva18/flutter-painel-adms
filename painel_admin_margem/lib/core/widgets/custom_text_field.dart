@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
   final bool enabled;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.label,
     this.hint,
     this.controller,
@@ -47,7 +47,7 @@ class CustomTextField extends StatelessWidget {
     this.textInputAction = TextInputAction.next,
     this.onFieldSubmitted,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +158,7 @@ class SearchTextField extends StatelessWidget {
   final bool autofocus;
 
   const SearchTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.hint = 'Pesquisar...',
     this.onChanged,
@@ -168,7 +168,7 @@ class SearchTextField extends StatelessWidget {
     this.inputFormatters,
     this.focusNode,
     this.autofocus = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

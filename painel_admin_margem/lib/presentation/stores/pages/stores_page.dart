@@ -8,7 +8,7 @@ import '../../shared/theme/app_text_styles.dart';
 import '../../../core/widgets/custom_button.dart';
 
 class StoresPage extends StatelessWidget {
-  const StoresPage({Key? key}) : super(key: key);
+  const StoresPage({super.key});
 
   @override
   Widget build(BuildContext context) {

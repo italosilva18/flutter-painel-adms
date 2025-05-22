@@ -11,7 +11,7 @@ import '../../../core/widgets/confirmation_dialog.dart';
 import '../../../domain/entities/mobile_user.dart';
 
 class MobileUserFormPage extends StatelessWidget {
-  const MobileUserFormPage({Key? key}) : super(key: key);
+  const MobileUserFormPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,18 +2,12 @@ import '../../../domain/entities/support_user.dart';
 
 class SupportModel extends SupportUser {
   const SupportModel({
-    required String id,
-    required String name,
-    required String email,
-    required String partner,
-    required double codePartner,
-  }) : super(
-          id: id,
-          name: name,
-          email: email,
-          partner: partner,
-          codePartner: codePartner,
-        );
+    required super.id,
+    required super.name,
+    required super.email,
+    required super.partner,
+    required super.codePartner,
+  });
 
   factory SupportModel.fromJson(Map<String, dynamic> json) {
     return SupportModel(

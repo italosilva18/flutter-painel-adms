@@ -2,28 +2,17 @@ import '../../../domain/entities/mobile_user.dart';
 
 class MobileModel extends MobileUser {
   const MobileModel({
-    required String id,
-    required String name,
-    required String email,
-    required String phone,
-    String? password,
-    required String type,
-    required String partner,
-    required double codePartner,
-    required bool active,
-    List<String> storeIds = const [],
-  }) : super(
-          id: id,
-          name: name,
-          email: email,
-          phone: phone,
-          password: password,
-          type: type,
-          partner: partner,
-          codePartner: codePartner,
-          active: active,
-          storeIds: storeIds,
-        );
+    required super.id,
+    required super.name,
+    required super.email,
+    required super.phone,
+    super.password,
+    required super.type,
+    required super.partner,
+    required super.codePartner,
+    required super.active,
+    super.storeIds,
+  });
 
   factory MobileModel.fromJson(Map<String, dynamic> json) {
     return MobileModel(

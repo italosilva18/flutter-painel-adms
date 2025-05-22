@@ -9,7 +9,7 @@ import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/confirmation_dialog.dart';
 
 class SupportUserFormPage extends StatelessWidget {
-  const SupportUserFormPage({Key? key}) : super(key: key);
+  const SupportUserFormPage({super.key});
 
   @override
   Widget build(BuildContext context) {

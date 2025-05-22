@@ -56,14 +56,14 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // Inicializa dependências
-  await initDependencies();
+  // Inicializa dependências básicas
+  await initCoreDependencies();
 
   runApp(const MyApp());
 }
 
-/// Inicializa as dependências do aplicativo
-Future<void> initDependencies() async {
+/// Inicializa apenas as dependências essenciais
+Future<void> initCoreDependencies() async {
   // Shared Preferences
   final sharedPreferences = await SharedPreferences.getInstance();
   Get.put<SharedPreferences>(sharedPreferences);
@@ -81,165 +81,163 @@ Future<void> initDependencies() async {
   final inputConverter = InputConverter();
   Get.put<InputConverter>(inputConverter);
 
-  // DataSources
-  final authDataSource = AuthDataSourceImpl(
-    client: apiClient,
-    sharedPreferences: sharedPreferences,
-  );
-  Get.put<AuthDataSource>(authDataSource);
+  // Inicializa apenas o AuthController para login
+  _initAuthDependencies();
+}
 
-  final storeDataSource = StoreDataSourceImpl(
-    client: apiClient,
-  );
-  Get.put<StoreDataSource>(storeDataSource);
+/// Inicializa dependências de autenticação
+void _initAuthDependencies() {
+  // DataSource
+  Get.lazyPut<AuthDataSource>(() => AuthDataSourceImpl(
+        client: Get.find<ApiClient>(),
+        sharedPreferences: Get.find<SharedPreferences>(),
+      ));
 
-  final mobileDataSource = MobileDataSourceImpl(
-    client: apiClient,
-  );
-  Get.put<MobileDataSource>(mobileDataSource);
+  // Repository
+  Get.lazyPut(() => AuthRepository(
+        dataSource: Get.find<AuthDataSource>(),
+        networkInfo: Get.find<NetworkInfo>(),
+      ));
 
-  final supportDataSource = SupportDataSourceImpl(
-    client: apiClient,
-  );
-  Get.put<SupportDataSource>(supportDataSource);
+  // UseCases
+  Get.lazyPut(() => LoginUseCase(
+        repository: Get.find<AuthRepository>(),
+        networkInfo: Get.find<NetworkInfo>(),
+      ));
 
-  // Repositories
-  final authRepository = AuthRepository(
-    dataSource: authDataSource,
-    networkInfo: networkInfo,
-  );
-  Get.put(authRepository);
+  Get.lazyPut(() => LogoutUseCase(
+        repository: Get.find<AuthRepository>(),
+      ));
 
-  final storeRepository = StoreRepository(
-    dataSource: storeDataSource,
-    networkInfo: networkInfo,
-  );
-  Get.put(storeRepository);
+  // Controller
+  Get.put(AuthController(
+    loginUseCase: Get.find<LoginUseCase>(),
+    logoutUseCase: Get.find<LogoutUseCase>(),
+  ));
+}
 
-  final mobileRepository = MobileRepository(
-    dataSource: mobileDataSource,
-    networkInfo: networkInfo,
-  );
-  Get.put(mobileRepository);
+/// Inicializa dependências de lojas (lazy)
+void initStoreDependencies() {
+  // DataSource
+  Get.lazyPut<StoreDataSource>(() => StoreDataSourceImpl(
+        client: Get.find<ApiClient>(),
+      ));
 
-  final supportRepository = SupportRepository(
-    dataSource: supportDataSource,
-    networkInfo: networkInfo,
-  );
-  Get.put(supportRepository);
+  // Repository
+  Get.lazyPut(() => StoreRepository(
+        dataSource: Get.find<StoreDataSource>(),
+        networkInfo: Get.find<NetworkInfo>(),
+      ));
 
-  // UseCases - Auth
-  final loginUseCase = LoginUseCase(
-    repository: authRepository,
-    networkInfo: networkInfo,
-  );
-  Get.put(loginUseCase);
+  // UseCases
+  Get.lazyPut(() => GetStoresUseCase(
+        repository: Get.find<StoreRepository>(),
+      ));
 
-  final logoutUseCase = LogoutUseCase(
-    repository: authRepository,
-  );
-  Get.put(logoutUseCase);
+  Get.lazyPut(() => CreateStoreUseCase(
+        repository: Get.find<StoreRepository>(),
+      ));
 
-  // UseCases - Store
-  final getStoresUseCase = GetStoresUseCase(
-    repository: storeRepository,
-  );
-  Get.put(getStoresUseCase);
+  Get.lazyPut(() => UpdateStoreUseCase(
+        repository: Get.find<StoreRepository>(),
+      ));
 
-  final createStoreUseCase = CreateStoreUseCase(
-    repository: storeRepository,
-  );
-  Get.put(createStoreUseCase);
+  Get.lazyPut(() => DeleteStoreUseCase(
+        repository: Get.find<StoreRepository>(),
+      ));
 
-  final updateStoreUseCase = UpdateStoreUseCase(
-    repository: storeRepository,
-  );
-  Get.put(updateStoreUseCase);
+  // Controller
+  Get.lazyPut(() => StoresController(
+        getStoresUseCase: Get.find<GetStoresUseCase>(),
+        createStoreUseCase: Get.find<CreateStoreUseCase>(),
+        updateStoreUseCase: Get.find<UpdateStoreUseCase>(),
+        deleteStoreUseCase: Get.find<DeleteStoreUseCase>(),
+        inputConverter: Get.find<InputConverter>(),
+      ));
+}
 
-  final deleteStoreUseCase = DeleteStoreUseCase(
-    repository: storeRepository,
-  );
-  Get.put(deleteStoreUseCase);
+/// Inicializa dependências de usuários mobile (lazy)
+void initMobileDependencies() {
+  // DataSource
+  Get.lazyPut<MobileDataSource>(() => MobileDataSourceImpl(
+        client: Get.find<ApiClient>(),
+      ));
 
-  // UseCases - Mobile
-  final getMobileUsersUseCase = GetMobileUsersUseCase(
-    repository: mobileRepository,
-  );
-  Get.put(getMobileUsersUseCase);
+  // Repository
+  Get.lazyPut(() => MobileRepository(
+        dataSource: Get.find<MobileDataSource>(),
+        networkInfo: Get.find<NetworkInfo>(),
+      ));
 
-  final createMobileUserUseCase = CreateMobileUserUseCase(
-    repository: mobileRepository,
-  );
-  Get.put(createMobileUserUseCase);
+  // UseCases
+  Get.lazyPut(() => GetMobileUsersUseCase(
+        repository: Get.find<MobileRepository>(),
+      ));
 
-  final updateMobileUserUseCase = UpdateMobileUserUseCase(
-    repository: mobileRepository,
-  );
-  Get.put(updateMobileUserUseCase);
+  Get.lazyPut(() => CreateMobileUserUseCase(
+        repository: Get.find<MobileRepository>(),
+      ));
 
-  final deleteMobileUserUseCase = DeleteMobileUserUseCase(
-    repository: mobileRepository,
-  );
-  Get.put(deleteMobileUserUseCase);
+  Get.lazyPut(() => UpdateMobileUserUseCase(
+        repository: Get.find<MobileRepository>(),
+      ));
 
-  // UseCases - Support
-  final getSupportUsersUseCase = GetSupportUsersUseCase(
-    repository: supportRepository,
-  );
-  Get.put(getSupportUsersUseCase);
+  Get.lazyPut(() => DeleteMobileUserUseCase(
+        repository: Get.find<MobileRepository>(),
+      ));
 
-  final createSupportUserUseCase = CreateSupportUserUseCase(
-    repository: supportRepository,
-  );
-  Get.put(createSupportUserUseCase);
+  // Controller
+  Get.lazyPut(() => MobileController(
+        getMobileUsersUseCase: Get.find<GetMobileUsersUseCase>(),
+        createMobileUserUseCase: Get.find<CreateMobileUserUseCase>(),
+        updateMobileUserUseCase: Get.find<UpdateMobileUserUseCase>(),
+        deleteMobileUserUseCase: Get.find<DeleteMobileUserUseCase>(),
+        getStoresUseCase: Get.find<GetStoresUseCase>(),
+      ));
+}
 
-  final updateSupportUserUseCase = UpdateSupportUserUseCase(
-    repository: supportRepository,
-  );
-  Get.put(updateSupportUserUseCase);
+/// Inicializa dependências de suporte (lazy)
+void initSupportDependencies() {
+  // DataSource
+  Get.lazyPut<SupportDataSource>(() => SupportDataSourceImpl(
+        client: Get.find<ApiClient>(),
+      ));
 
-  final deleteSupportUserUseCase = DeleteSupportUserUseCase(
-    repository: supportRepository,
-  );
-  Get.put(deleteSupportUserUseCase);
+  // Repository
+  Get.lazyPut(() => SupportRepository(
+        dataSource: Get.find<SupportDataSource>(),
+        networkInfo: Get.find<NetworkInfo>(),
+      ));
 
-  // Controllers
-  final authController = AuthController(
-    loginUseCase: loginUseCase,
-    logoutUseCase: logoutUseCase,
-  );
-  Get.put(authController);
+  // UseCases
+  Get.lazyPut(() => GetSupportUsersUseCase(
+        repository: Get.find<SupportRepository>(),
+      ));
 
-  final storesController = StoresController(
-    getStoresUseCase: getStoresUseCase,
-    createStoreUseCase: createStoreUseCase,
-    updateStoreUseCase: updateStoreUseCase,
-    deleteStoreUseCase: deleteStoreUseCase,
-    inputConverter: inputConverter,
-  );
-  Get.put(storesController);
+  Get.lazyPut(() => CreateSupportUserUseCase(
+        repository: Get.find<SupportRepository>(),
+      ));
 
-  final mobileController = MobileController(
-    getMobileUsersUseCase: getMobileUsersUseCase,
-    createMobileUserUseCase: createMobileUserUseCase,
-    updateMobileUserUseCase: updateMobileUserUseCase,
-    deleteMobileUserUseCase: deleteMobileUserUseCase,
-    getStoresUseCase: getStoresUseCase,
-  );
-  Get.put(mobileController);
+  Get.lazyPut(() => UpdateSupportUserUseCase(
+        repository: Get.find<SupportRepository>(),
+      ));
 
-  final supportController = SupportController(
-    getSupportUsersUseCase: getSupportUsersUseCase,
-    createSupportUserUseCase: createSupportUserUseCase,
-    updateSupportUserUseCase: updateSupportUserUseCase,
-    deleteSupportUserUseCase: deleteSupportUserUseCase,
-  );
-  Get.put(supportController);
+  Get.lazyPut(() => DeleteSupportUserUseCase(
+        repository: Get.find<SupportRepository>(),
+      ));
+
+  // Controller
+  Get.lazyPut(() => SupportController(
+        getSupportUsersUseCase: Get.find<GetSupportUsersUseCase>(),
+        createSupportUserUseCase: Get.find<CreateSupportUserUseCase>(),
+        updateSupportUserUseCase: Get.find<UpdateSupportUserUseCase>(),
+        deleteSupportUserUseCase: Get.find<DeleteSupportUserUseCase>(),
+      ));
 }
 
 /// Widget principal do aplicativo
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +249,15 @@ class MyApp extends StatelessWidget {
       getPages: AppRoutes.routes,
       initialRoute: '/login',
       locale: const Locale('pt', 'BR'),
+      // Configurações para otimizar performance na web
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: const TextScaler.linear(1.0),
+          ),
+          child: child!,
+        );
+      },
     );
   }
 }

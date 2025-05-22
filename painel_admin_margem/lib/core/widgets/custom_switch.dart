@@ -9,12 +9,12 @@ class CustomSwitch extends StatelessWidget {
   final bool enabled;
 
   const CustomSwitch({
-    Key? key,
+    super.key,
     required this.label,
     required this.value,
     this.onChanged,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +50,13 @@ class CustomSwitchTile extends StatelessWidget {
   final bool enabled;
 
   const CustomSwitchTile({
-    Key? key,
+    super.key,
     required this.title,
     this.subtitle,
     required this.value,
     this.onChanged,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

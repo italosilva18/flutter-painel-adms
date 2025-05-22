@@ -8,7 +8,7 @@ import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_text_field.dart';
 
 class SupportUsersPage extends StatelessWidget {
-  const SupportUsersPage({Key? key}) : super(key: key);
+  const SupportUsersPage({super.key});
 
   @override
   Widget build(BuildContext context) {

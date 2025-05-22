@@ -15,7 +15,7 @@ class ConfirmationDialog extends StatelessWidget {
   final bool isLoading;
 
   const ConfirmationDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     this.confirmButtonText = 'Confirmar',
@@ -24,7 +24,7 @@ class ConfirmationDialog extends StatelessWidget {
     this.onCancel,
     this.isDanger = false,
     this.isLoading = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -124,12 +124,12 @@ class DeleteConfirmationDialog extends StatelessWidget {
   final bool isLoading;
 
   const DeleteConfirmationDialog({
-    Key? key,
+    super.key,
     required this.entityName,
     this.onConfirm,
     this.onCancel,
     this.isLoading = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -185,12 +185,12 @@ class InfoDialog extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const InfoDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     this.buttonText = 'OK',
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

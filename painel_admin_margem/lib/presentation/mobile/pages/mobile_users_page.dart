@@ -8,7 +8,7 @@ import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_text_field.dart';
 
 class MobileUsersPage extends StatelessWidget {
-  const MobileUsersPage({Key? key}) : super(key: key);
+  const MobileUsersPage({super.key});
 
   @override
   Widget build(BuildContext context) {

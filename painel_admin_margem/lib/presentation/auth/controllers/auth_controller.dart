@@ -13,20 +13,22 @@ class AuthController extends GetxController {
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  final Rx<User?> _currentUser = Rx<User?>(null);
-  final RxBool _isLoading = false.obs;
-  final RxBool _isAuthenticated = false.obs;
-  final RxString _errorMessage = ''.obs;
+  // Variáveis privadas sem reatividade
+  User? _currentUser;
+  bool _isLoading = false;
+  bool _isAuthenticated = false;
+  String _errorMessage = '';
 
   AuthController({
     required this.loginUseCase,
     required this.logoutUseCase,
   });
 
-  User? get currentUser => _currentUser.value;
-  bool get isLoading => _isLoading.value;
-  bool get isAuthenticated => _isAuthenticated.value;
-  String get errorMessage => _errorMessage.value;
+  // Getters públicos
+  User? get currentUser => _currentUser;
+  bool get isLoading => _isLoading;
+  bool get isAuthenticated => _isAuthenticated;
+  String get errorMessage => _errorMessage;
 
   @override
   void onInit() {
@@ -43,29 +45,31 @@ class AuthController extends GetxController {
 
   /// Verifica se o usuário está autenticado
   Future<void> checkAuthentication() async {
-    _isLoading.value = true;
+    _setLoading(true);
+
     final result = await loginUseCase.repository.isAuthenticated();
     result.fold(
       (failure) {
-        _isAuthenticated.value = false;
-        _currentUser.value = null;
+        _isAuthenticated = false;
+        _currentUser = null;
       },
       (isAuth) async {
-        _isAuthenticated.value = isAuth;
+        _isAuthenticated = isAuth;
         if (isAuth) {
           final userResult = await loginUseCase.repository.getCurrentUser();
           userResult.fold(
             (failure) {
-              _currentUser.value = null;
+              _currentUser = null;
             },
             (user) {
-              _currentUser.value = user;
+              _currentUser = user;
             },
           );
         }
       },
     );
-    _isLoading.value = false;
+
+    _setLoading(false);
   }
 
   /// Realiza o login do usuário
@@ -74,8 +78,8 @@ class AuthController extends GetxController {
       return;
     }
 
-    _isLoading.value = true;
-    _errorMessage.value = '';
+    _setLoading(true);
+    _setErrorMessage('');
 
     final params = LoginParams(
       email: emailController.text.trim(),
@@ -86,48 +90,59 @@ class AuthController extends GetxController {
 
     result.fold(
       (failure) {
-        _errorMessage.value = failure.message;
-        _isAuthenticated.value = false;
-        _currentUser.value = null;
+        _setErrorMessage(failure.message);
+        _isAuthenticated = false;
+        _currentUser = null;
       },
       (user) {
-        _currentUser.value = user;
-        _isAuthenticated.value = true;
-        _errorMessage.value = '';
+        _currentUser = user;
+        _isAuthenticated = true;
+        _setErrorMessage('');
         Get.offAllNamed('/stores');
       },
     );
 
-    _isLoading.value = false;
+    _setLoading(false);
   }
 
   /// Realiza o logout do usuário
   Future<void> logout() async {
-    _isLoading.value = true;
+    _setLoading(true);
 
     final result = await logoutUseCase();
 
     result.fold(
       (failure) {
-        _errorMessage.value = failure.message;
+        _setErrorMessage(failure.message);
       },
       (_) {
-        _currentUser.value = null;
-        _isAuthenticated.value = false;
-        _errorMessage.value = '';
+        _currentUser = null;
+        _isAuthenticated = false;
+        _setErrorMessage('');
         // Volta para a tela de login
         Get.offAllNamed('/login');
       },
     );
 
-    _isLoading.value = false;
+    _setLoading(false);
   }
 
   /// Limpa os campos do formulário
   void clearForm() {
     emailController.clear();
     passwordController.clear();
-    _errorMessage.value = '';
+    _setErrorMessage('');
+  }
+
+  // Métodos privados para atualizar estado e notificar UI
+  void _setLoading(bool value) {
+    _isLoading = value;
+    update(['loading']); // Atualiza apenas widgets com ID 'loading'
+  }
+
+  void _setErrorMessage(String message) {
+    _errorMessage = message;
+    update(['error_message']); // Atualiza apenas widgets com ID 'error_message'
   }
 
   /// Validador para o campo de e-mail

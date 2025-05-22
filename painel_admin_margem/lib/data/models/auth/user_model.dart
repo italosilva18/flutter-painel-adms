@@ -3,16 +3,11 @@ import '../../../domain/entities/user.dart';
 /// Modelo de dados para o usuário
 class UserModel extends User {
   const UserModel({
-    required String id,
-    required String name,
-    required String email,
-    String? token,
-  }) : super(
-          id: id,
-          name: name,
-          email: email,
-          token: token,
-        );
+    required super.id,
+    required super.name,
+    required super.email,
+    super.token,
+  });
 
   /// Cria a partir de um mapa de dados (JSON)
   factory UserModel.fromJson(Map<String, dynamic> json) {

@@ -12,7 +12,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final bool isEnabled;
 
   const CustomDropdown({
-    Key? key,
+    super.key,
     required this.label,
     this.hint,
     required this.value,
@@ -20,7 +20,7 @@ class CustomDropdown<T> extends StatelessWidget {
     required this.onChanged,
     this.validator,
     this.isEnabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +122,7 @@ class SearchableDropdown<T> extends StatefulWidget {
   final Function(String)? onSearch;
 
   const SearchableDropdown({
-    Key? key,
+    super.key,
     required this.label,
     this.hint,
     required this.value,
@@ -132,7 +132,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.isEnabled = true,
     this.searchHint = 'Pesquisar...',
     this.onSearch,
-  }) : super(key: key);
+  });
 
   @override
   State<SearchableDropdown<T>> createState() => _SearchableDropdownState<T>();

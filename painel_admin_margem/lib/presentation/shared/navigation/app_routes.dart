@@ -10,6 +10,7 @@ import '../../mobile/pages/mobile_user_stores_page.dart';
 import '../../support/pages/support_users_page.dart';
 import '../../support/pages/support_user_form_page.dart';
 import '../../auth/controllers/auth_controller.dart';
+import '../../../main.dart';
 
 /// Classe que contém as rotas do aplicativo
 class AppRoutes {
@@ -28,6 +29,7 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: StoreBinding(),
     ),
     GetPage(
       name: '/stores/form',
@@ -36,6 +38,7 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: StoreBinding(),
     ),
     GetPage(
       name: '/stores/details',
@@ -44,6 +47,7 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: StoreBinding(),
     ),
 
     // Rotas de usuários mobile
@@ -54,6 +58,7 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: MobileBinding(),
     ),
     GetPage(
       name: '/mobile/form',
@@ -62,6 +67,7 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: MobileBinding(),
     ),
     GetPage(
       name: '/mobile/stores',
@@ -70,6 +76,7 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: MobileBinding(),
     ),
 
     // Rotas de usuários de suporte
@@ -80,6 +87,7 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: SupportBinding(),
     ),
     GetPage(
       name: '/support/form',
@@ -88,8 +96,35 @@ class AppRoutes {
       middlewares: [
         RouteGuard(),
       ],
+      binding: SupportBinding(),
     ),
   ];
+}
+
+/// Binding para dependências de lojas
+class StoreBinding extends Bindings {
+  @override
+  void dependencies() {
+    initStoreDependencies();
+  }
+}
+
+/// Binding para dependências de usuários mobile
+class MobileBinding extends Bindings {
+  @override
+  void dependencies() {
+    initMobileDependencies();
+    // Mobile precisa das dependências de Store também
+    initStoreDependencies();
+  }
+}
+
+/// Binding para dependências de suporte
+class SupportBinding extends Bindings {
+  @override
+  void dependencies() {
+    initSupportDependencies();
+  }
 }
 
 /// Middleware para proteção de rotas
