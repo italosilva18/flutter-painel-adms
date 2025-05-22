@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/theme/app_text_styles.dart';
 import '../controllers/auth_controller.dart';
-import '../../../../core/widgets/custom_button.dart';
-import '../../../../core/widgets/custom_text_field.dart';
+import '../../../core/widgets/custom_button.dart';
+import '../../../core/widgets/custom_text_field.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: 400,
-                minHeight: size.height - 32, // Ajustado para evitar overflow
+                minHeight: size.height - 32,
               ),
               child: IntrinsicHeight(
                 child: Column(
@@ -117,7 +117,7 @@ class LoginPage extends StatelessWidget {
                                         ),
                                         child: Row(
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Icons.error_outline,
                                               color: AppColors.error,
                                               size: 20,
