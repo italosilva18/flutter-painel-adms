@@ -1,4 +1,4 @@
-import '../support/support_model.dart';
+import 'support_model.dart';
 
 class SupportRequest {
   final String name;

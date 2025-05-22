@@ -11,6 +11,7 @@ abstract class SupportDataSource {
   Future<SupportModel> createSupportUser(SupportRequest user);
   Future<SupportModel> updateSupportUser(String id, SupportRequest user);
   Future<void> deleteSupportUser(String id);
+  Future<List<Map<String, dynamic>>> getPartners();
 }
 
 class SupportDataSourceImpl implements SupportDataSource {
@@ -159,6 +160,34 @@ class SupportDataSourceImpl implements SupportDataSource {
       if (response.statusCode != 200) {
         throw ServerException(
           message: 'Falha ao excluir usuário de suporte',
+          statusCode: response.statusCode,
+        );
+      }
+    } on DioException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Erro de conexão',
+        statusCode: e.response?.statusCode,
+      );
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getPartners() async {
+    try {
+      final response = await client.get('/admin/partners');
+
+      if (response.statusCode == 200 && response.data is List) {
+        return (response.data as List)
+            .map((item) => {
+                  'name': item['name'] as String,
+                  'code': item['code'] as double,
+                })
+            .toList();
+      } else {
+        throw ServerException(
+          message: 'Falha ao obter parceiros',
           statusCode: response.statusCode,
         );
       }

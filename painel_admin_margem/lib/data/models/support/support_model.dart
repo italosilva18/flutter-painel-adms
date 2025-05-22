@@ -1,4 +1,4 @@
-import '../../domain/entities/support_user.dart';
+import '../../../domain/entities/support_user.dart';
 
 class SupportModel extends SupportUser {
   const SupportModel({

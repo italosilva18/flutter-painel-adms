@@ -21,4 +21,7 @@ abstract class ISupportRepository {
 
   /// Remove um usuário de suporte
   Future<Either<Failure, void>> deleteSupportUser(String id);
+
+  /// Obtém todos os parceiros disponíveis
+  Future<Either<Failure, List<Map<String, dynamic>>>> getPartners();
 }

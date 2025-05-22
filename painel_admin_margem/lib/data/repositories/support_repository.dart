@@ -25,7 +25,7 @@ class SupportRepository implements ISupportRepository {
 
     try {
       final users = await dataSource.getSupportUsers();
-      return Right(users);
+      return Right(users.cast<SupportUser>());
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
     } catch (e) {
@@ -114,6 +114,22 @@ class SupportRepository implements ISupportRepository {
     try {
       await dataSource.deleteSupportUser(id);
       return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Map<String, dynamic>>>> getPartners() async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure());
+    }
+
+    try {
+      final partners = await dataSource.getPartners();
+      return Right(partners);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
     } catch (e) {
