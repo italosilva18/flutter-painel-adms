@@ -32,7 +32,7 @@ class CustomSwitch extends StatelessWidget {
           value: value,
           onChanged: enabled ? onChanged : null,
           activeColor: AppColors.primary,
-          activeTrackColor: AppColors.primary.withOpacity(0.5),
+          activeTrackColor: AppColors.primary.withValues(alpha: 0.5),
           inactiveThumbColor: AppColors.backgroundLight,
           inactiveTrackColor: AppColors.border,
         ),
@@ -74,7 +74,7 @@ class CustomSwitchTile extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: enabled
                     ? AppColors.textTertiary
-                    : AppColors.textTertiary.withOpacity(0.5),
+                    : AppColors.textTertiary.withValues(alpha: 0.5),
               ),
             )
           : null,
@@ -82,7 +82,7 @@ class CustomSwitchTile extends StatelessWidget {
         value: value,
         onChanged: enabled ? onChanged : null,
         activeColor: AppColors.primary,
-        activeTrackColor: AppColors.primary.withOpacity(0.5),
+        activeTrackColor: AppColors.primary.withValues(alpha: 0.5),
         inactiveThumbColor: AppColors.backgroundLight,
         inactiveTrackColor: AppColors.border,
       ),

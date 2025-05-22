@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 /// Utilitário para conversão e formatação de entradas
 class InputConverter {
   /// Remove todos os caracteres não numéricos

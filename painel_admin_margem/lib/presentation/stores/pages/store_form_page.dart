@@ -353,7 +353,7 @@ class StoreFormPage extends StatelessWidget {
                 onSelected: (selected) {
                   controller.toggleOperation(operation['id'] as int);
                 },
-                selectedColor: AppColors.primary.withOpacity(0.2),
+                selectedColor: AppColors.primary.withValues(alpha: 0.2),
                 checkmarkColor: AppColors.primary,
               );
             });

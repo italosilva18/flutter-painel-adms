@@ -1,4 +1,4 @@
-import '../../domain/entities/mobile_user.dart';
+import '../../../domain/entities/mobile_user.dart';
 
 class MobileModel extends MobileUser {
   const MobileModel({

@@ -1,4 +1,4 @@
-import '../../domain/entities/store.dart';
+import '../../../domain/entities/store.dart';
 
 class StoreModel extends Store {
   const StoreModel({

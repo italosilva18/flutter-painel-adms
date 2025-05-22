@@ -49,8 +49,8 @@ class StoreListItem extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: store.active
-                          ? AppColors.success.withOpacity(0.1)
-                          : AppColors.error.withOpacity(0.1),
+                          ? AppColors.success.withValues(alpha: 0.1)
+                          : AppColors.error.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
