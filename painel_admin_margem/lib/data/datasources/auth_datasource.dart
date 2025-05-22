@@ -1,3 +1,4 @@
+import 'dart:convert';
 import '../models/auth/auth_request.dart';
 import '../models/auth/user_model.dart';
 import '../../core/error/exceptions.dart';
@@ -99,9 +100,7 @@ class AuthDataSourceImpl implements AuthDataSource {
       if (jsonString != null) {
         return UserModel.fromJson(
           Map<String, dynamic>.from(
-            Map.castFrom<dynamic, dynamic, String, dynamic>(
-              const JsonDecoder().convert(jsonString),
-            ),
+            jsonDecode(jsonString),
           ),
         );
       }
@@ -116,7 +115,7 @@ class AuthDataSourceImpl implements AuthDataSource {
   @override
   Future<void> cacheUser(UserModel user) async {
     try {
-      final jsonString = const JsonEncoder().convert(user.toJson());
+      final jsonString = jsonEncode(user.toJson());
       await sharedPreferences.setString(_cachedUserKey, jsonString);
     } catch (e) {
       throw CacheException(

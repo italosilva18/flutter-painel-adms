@@ -19,7 +19,7 @@ class LoginUseCase {
   Future<Either<Failure, User>> call(LoginParams params) async {
     // Verifica conexão com a internet
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     // Validação básica

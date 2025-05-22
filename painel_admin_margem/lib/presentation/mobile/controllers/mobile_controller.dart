@@ -194,7 +194,7 @@ class MobileController extends GetxController {
       },
       (stores) {
         _allStores.assignAll(stores);
-        _filterStores('');
+        filterStores('');
       },
     );
 

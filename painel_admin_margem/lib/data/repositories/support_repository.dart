@@ -20,7 +20,7 @@ class SupportRepository implements ISupportRepository {
   @override
   Future<Either<Failure, List<SupportUser>>> getSupportUsers() async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -36,7 +36,7 @@ class SupportRepository implements ISupportRepository {
   @override
   Future<Either<Failure, SupportUser>> getSupportUserById(String id) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -53,7 +53,7 @@ class SupportRepository implements ISupportRepository {
   Future<Either<Failure, SupportUser>> getSupportUserByEmail(
       String email) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -70,7 +70,7 @@ class SupportRepository implements ISupportRepository {
   Future<Either<Failure, SupportUser>> createSupportUser(
       SupportUser user) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -89,7 +89,7 @@ class SupportRepository implements ISupportRepository {
   Future<Either<Failure, SupportUser>> updateSupportUser(
       SupportUser user) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -108,7 +108,7 @@ class SupportRepository implements ISupportRepository {
   @override
   Future<Either<Failure, void>> deleteSupportUser(String id) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {

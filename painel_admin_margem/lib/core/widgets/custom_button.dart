@@ -45,7 +45,7 @@ class CustomButton extends StatelessWidget {
       width: isFullWidth ? double.infinity : width,
       height: height,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: AppColors.primaryGradient,
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,

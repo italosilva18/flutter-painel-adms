@@ -48,4 +48,21 @@ class AppColors {
 
   // Gradiente da borda de menu ativo
   static const List<Color> menuActiveBorderGradient = primaryGradient;
+
+  // Métodos para cores com opacidade (usando withValues)
+  static Color primaryWithOpacity(double opacity) {
+    return primary.withValues(alpha: opacity);
+  }
+
+  static Color successWithOpacity(double opacity) {
+    return success.withValues(alpha: opacity);
+  }
+
+  static Color errorWithOpacity(double opacity) {
+    return error.withValues(alpha: opacity);
+  }
+
+  static Color textTertiaryWithOpacity(double opacity) {
+    return textTertiary.withValues(alpha: opacity);
+  }
 }

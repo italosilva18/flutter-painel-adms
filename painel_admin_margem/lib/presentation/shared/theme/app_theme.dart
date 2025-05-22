@@ -13,7 +13,7 @@ class AppTheme {
       primary: AppColors.primary,
       secondary: AppColors.secondary,
       tertiary: AppColors.tertiary,
-      background: AppColors.background,
+      surface: AppColors.background,
       error: AppColors.error,
     ),
     appBarTheme: AppBarTheme(
@@ -110,8 +110,8 @@ class AppTheme {
       ),
     ),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.resolveWith<Color>((states) {
-        if (states.contains(MaterialState.selected)) {
+      fillColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primary;
         }
         return AppColors.backgroundLight;
@@ -121,14 +121,14 @@ class AppTheme {
       ),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.resolveWith<Color>((states) {
-        if (states.contains(MaterialState.selected)) {
+      thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primary;
         }
         return AppColors.backgroundLight;
       }),
-      trackColor: MaterialStateProperty.resolveWith<Color>((states) {
-        if (states.contains(MaterialState.selected)) {
+      trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primary.withOpacity(0.5);
         }
         return AppColors.border;

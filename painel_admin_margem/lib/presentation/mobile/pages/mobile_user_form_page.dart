@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import '../controllers/mobile_controller.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/theme/app_text_styles.dart';
@@ -293,7 +292,7 @@ class MobileUserFormPage extends StatelessWidget {
                         style: AppTextStyles.subtitle2,
                       ),
                       subtitle: Text(
-                        store.address.city + ', ' + store.address.state,
+                        '${store.address.city}, ${store.address.state}',
                         style: AppTextStyles.bodyText2.copyWith(
                           color: AppColors.textTertiary,
                         ),

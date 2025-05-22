@@ -22,7 +22,7 @@ class MobileRepository implements IMobileRepository {
   @override
   Future<Either<Failure, List<MobileUser>>> getMobileUsers() async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -38,7 +38,7 @@ class MobileRepository implements IMobileRepository {
   @override
   Future<Either<Failure, MobileUser>> getMobileUserById(String id) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -54,7 +54,7 @@ class MobileRepository implements IMobileRepository {
   @override
   Future<Either<Failure, MobileUser>> getMobileUserByEmail(String email) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -70,7 +70,7 @@ class MobileRepository implements IMobileRepository {
   @override
   Future<Either<Failure, MobileUser>> createMobileUser(MobileUser user) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -88,7 +88,7 @@ class MobileRepository implements IMobileRepository {
   @override
   Future<Either<Failure, MobileUser>> updateMobileUser(MobileUser user) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -107,7 +107,7 @@ class MobileRepository implements IMobileRepository {
   @override
   Future<Either<Failure, void>> deleteMobileUser(String id) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -124,7 +124,7 @@ class MobileRepository implements IMobileRepository {
   Future<Either<Failure, List<Store>>> getMobileUserStores(
       String userId) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -143,7 +143,7 @@ class MobileRepository implements IMobileRepository {
   Future<Either<Failure, void>> linkStoreToMobileUser(
       String userId, String storeId) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -160,7 +160,7 @@ class MobileRepository implements IMobileRepository {
   Future<Either<Failure, void>> unlinkStoreFromMobileUser(
       String userId, String storeId) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {

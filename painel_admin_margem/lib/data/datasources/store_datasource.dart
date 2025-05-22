@@ -92,7 +92,7 @@ class StoreDataSourceImpl implements StoreDataSource {
       if (response.statusCode == 200) {
         if (response.data is List && (response.data as List).isNotEmpty) {
           return StoreModel.fromJson((response.data as List).first);
-        } else if (response.data != null && !(response.data is List)) {
+        } else if (response.data != null && response.data is! List) {
           return StoreModel.fromJson(response.data);
         } else {
           throw ServerException(

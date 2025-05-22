@@ -23,7 +23,7 @@ class AuthRepository implements IAuthRepository {
     required String password,
   }) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {

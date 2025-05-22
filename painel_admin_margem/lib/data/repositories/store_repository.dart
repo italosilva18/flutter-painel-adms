@@ -20,12 +20,12 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, List<Store>>> getStores() async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
       final stores = await dataSource.getStores();
-      return Right(stores);
+      return Right(stores.cast<Store>());
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
     } catch (e) {
@@ -36,7 +36,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, Store>> getStoreById(String id) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -52,7 +52,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, Store>> getStoreByCnpj(String cnpj) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -68,7 +68,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, Store>> createStore(Store store) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -86,7 +86,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, Store>> updateStore(Store store) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -104,7 +104,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, void>> deleteStore(String id) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -120,7 +120,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, List<String>>> getSegments() async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -136,7 +136,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, List<String>>> getSizes() async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -152,7 +152,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, List<Map<String, dynamic>>>> getStates() async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
@@ -168,7 +168,7 @@ class StoreRepository implements IStoreRepository {
   @override
   Future<Either<Failure, List<Map<String, dynamic>>>> getPartners() async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
 
     try {
