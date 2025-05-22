@@ -10,6 +10,9 @@ class LoginUseCase {
   final IAuthRepository repository;
   final NetworkInfo networkInfo;
 
+  // ALTERAÇÃO: Flag para ativar bypass da verificação de conectividade durante desenvolvimento
+  final bool _isDevMode = true;
+
   LoginUseCase({
     required this.repository,
     required this.networkInfo,
@@ -17,8 +20,8 @@ class LoginUseCase {
 
   /// Executa o caso de uso de login
   Future<Either<Failure, User>> call(LoginParams params) async {
-    // Verifica conexão com a internet
-    if (!await networkInfo.isConnected) {
+    // ALTERAÇÃO: Verifica conexão com a internet apenas se não estiver em modo de desenvolvimento
+    if (!_isDevMode && !await networkInfo.isConnected) {
       return const Left(NetworkFailure());
     }
 

@@ -282,6 +282,10 @@ class MobileUserFormPage extends StatelessWidget {
                 )
               : ListView.separated(
                   padding: const EdgeInsets.all(16),
+                  // Adicionando shrinkWrap para evitar problemas de layout
+                  shrinkWrap: true,
+                  // Adicionando physics para garantir scrolling correto
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: controller.userStores.length,
                   separatorBuilder: (context, index) => const Divider(),
                   itemBuilder: (context, index) {
@@ -384,23 +388,36 @@ class MobileUserFormPage extends StatelessWidget {
     );
   }
 
+  // Método ajustado para resolver problemas de layout
   void _showAddStoreDialog(
     BuildContext context,
     MobileController controller,
   ) {
+    // Garantir que o diálogo tenha um tamanho fixo para evitar layout infinito
+    final screenSize = MediaQuery.of(context).size;
+
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Adicionar Loja',
-            style: AppTextStyles.headline3,
-          ),
-          content: SizedBox(
-            width: 500,
-            height: 400,
+        return Dialog(
+          // Definindo um tamanho fixo para o diálogo
+          child: Container(
+            width: screenSize.width * 0.8,
+            height: screenSize.height * 0.7,
+            constraints: BoxConstraints(
+              maxWidth: 600,
+              maxHeight: 600,
+            ),
+            padding: const EdgeInsets.all(16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Adicionar Loja',
+                  style: AppTextStyles.headline3,
+                ),
+                const SizedBox(height: 16),
+
                 // Campo de busca
                 SearchTextField(
                   controller: controller.storeSearchController,
@@ -411,7 +428,7 @@ class MobileUserFormPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // Lista de lojas
+                // Lista de lojas - Usando Expanded para garantir que a lista não expanda além do container
                 Expanded(
                   child: Obx(() {
                     if (controller.isLoading) {
@@ -430,8 +447,13 @@ class MobileUserFormPage extends StatelessWidget {
                     }
 
                     return ListView.separated(
+                      // Usar shrinkWrap para garantir que a lista se ajuste ao conteúdo
+                      shrinkWrap: true,
+                      // Usar physics para garantir o comportamento de scroll correto
+                      physics: const AlwaysScrollableScrollPhysics(),
                       itemCount: controller.filteredStores.length,
-                      separatorBuilder: (context, index) => const Divider(),
+                      separatorBuilder: (context, index) =>
+                          const Divider(height: 1),
                       itemBuilder: (context, index) {
                         final store = controller.filteredStores[index];
                         final isLinked =
@@ -441,10 +463,14 @@ class MobileUserFormPage extends StatelessWidget {
                           title: Text(
                             store.tradeName,
                             style: AppTextStyles.subtitle2,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           subtitle: Text(
                             '${store.cnpj} - ${store.address.city}, ${store.address.state}',
                             style: AppTextStyles.caption,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           trailing: isLinked
                               ? const Chip(
@@ -466,19 +492,24 @@ class MobileUserFormPage extends StatelessWidget {
                     );
                   }),
                 ),
+
+                // Botões de ação
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomButton(
+                      text: 'Cancelar',
+                      type: ButtonType.text,
+                      isFullWidth: false,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
-          actions: [
-            CustomButton(
-              text: 'Cancelar',
-              type: ButtonType.text,
-              isFullWidth: false,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
         );
       },
     );

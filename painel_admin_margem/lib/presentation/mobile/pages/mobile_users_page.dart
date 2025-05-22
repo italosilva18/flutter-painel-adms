@@ -1,9 +1,11 @@
+// lib/presentation/mobile/pages/mobile_users_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/mobile_controller.dart';
 import '../widgets/mobile_user_list_item.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/theme/app_text_styles.dart';
+import '../../shared/widgets/sidebar_menu.dart'; // Importar o menu
 import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_text_field.dart';
 
@@ -22,8 +24,9 @@ class MobileUsersPage extends StatelessWidget {
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
       ),
+      // Adicionar o drawer (menu lateral)
+      drawer: const SidebarMenu(selectedIndex: 1),
       body: Column(
         children: [
           // Filtro e botão de novo usuário
@@ -69,6 +72,8 @@ class MobileUsersPage extends StatelessWidget {
           // Lista de usuários
           Expanded(
             child: Obx(() {
+              // O resto do conteúdo permanece o mesmo
+              // ...
               if (controller.isLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),

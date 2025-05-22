@@ -73,8 +73,8 @@ Future<void> initCoreDependencies() async {
   final apiClient = ApiClient(dio);
   Get.put<ApiClient>(apiClient);
 
-  // NetworkInfo
-  final networkInfo = NetworkInfoImpl();
+  // NetworkInfo - ALTERAÇÃO: Usando a implementação simplificada
+  final networkInfo = SimpleNetworkInfoImpl();
   Get.put<NetworkInfo>(networkInfo);
 
   // InputConverter

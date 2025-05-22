@@ -125,7 +125,7 @@ class MobileUserStoresPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
 
-            // Lista de lojas vinculadas
+            // Lista de lojas vinculadas - Usamos Expanded para evitar overflow
             Expanded(
               child: controller.userStores.isEmpty
                   ? Center(
@@ -153,6 +153,10 @@ class MobileUserStoresPage extends StatelessWidget {
                     )
                   : ListView.separated(
                       padding: const EdgeInsets.all(16),
+                      // Adicionando shrinkWrap para evitar problemas de layout
+                      shrinkWrap: true,
+                      // Usando physics para permitir scroll adequado
+                      physics: const AlwaysScrollableScrollPhysics(),
                       itemCount: controller.userStores.length,
                       separatorBuilder: (context, index) => const Divider(),
                       itemBuilder: (context, index) {
@@ -233,16 +237,21 @@ class MobileUserStoresPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Adicionar Loja',
-            style: AppTextStyles.headline3,
-          ),
-          content: SizedBox(
+        return Dialog(
+          // Limitando o tamanho do diálogo para evitar constraints infinitos
+          child: Container(
             width: 500,
             height: 400,
+            padding: const EdgeInsets.all(16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Adicionar Loja',
+                  style: AppTextStyles.headline3,
+                ),
+                const SizedBox(height: 16),
+
                 // Campo de busca
                 SearchTextField(
                   controller: controller.storeSearchController,
@@ -253,7 +262,7 @@ class MobileUserStoresPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // Lista de lojas
+                // Lista de lojas - Usando Expanded para controlar o layout
                 Expanded(
                   child: Obx(() {
                     if (controller.isLoading) {
@@ -272,6 +281,7 @@ class MobileUserStoresPage extends StatelessWidget {
                     }
 
                     return ListView.separated(
+                      shrinkWrap: true,
                       itemCount: controller.filteredStores.length,
                       separatorBuilder: (context, index) => const Divider(),
                       itemBuilder: (context, index) {
@@ -308,19 +318,22 @@ class MobileUserStoresPage extends StatelessWidget {
                     );
                   }),
                 ),
+
+                // Botões de ação
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      child: const Text('Cancelar'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
-          actions: [
-            CustomButton(
-              text: 'Cancelar',
-              type: ButtonType.text,
-              isFullWidth: false,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
         );
       },
     );

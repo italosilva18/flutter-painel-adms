@@ -47,8 +47,9 @@ class NetworkInfoImpl implements NetworkInfo {
       // Tenta resolver DNS de múltiplos hosts
       final futures = _dnsHosts.map((host) async {
         try {
+          // ALTERAÇÃO: Aumentado timeout de 2 para 5 segundos
           final result = await InternetAddress.lookup(host)
-              .timeout(const Duration(seconds: 2));
+              .timeout(const Duration(seconds: 5));
           return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
         } catch (e) {
           return false;
@@ -69,9 +70,10 @@ class NetworkInfoImpl implements NetworkInfo {
       // Tenta fazer requisições HEAD (mais leves) para múltiplos endpoints
       final futures = _httpUrls.map((url) async {
         try {
+          // ALTERAÇÃO: Aumentado timeout de 3 para 5 segundos
           final response = await http
               .head(Uri.parse(url))
-              .timeout(const Duration(seconds: 3));
+              .timeout(const Duration(seconds: 5));
 
           // Aceita qualquer resposta como sinal de conectividade
           // (mesmo redirects 3xx ou erros do servidor 5xx indicam que há internet)
@@ -95,16 +97,17 @@ class SimpleNetworkInfoImpl implements NetworkInfo {
   @override
   Future<bool> get isConnected async {
     try {
-      // Tenta apenas um lookup DNS rápido
+      // ALTERAÇÃO: Aumentado timeout de 3 para 8 segundos
       final result = await InternetAddress.lookup('google.com')
-          .timeout(const Duration(seconds: 3));
+          .timeout(const Duration(seconds: 8));
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } on SocketException {
       return false;
     } on TimeoutException {
       return false;
     } catch (e) {
-      return false;
+      // ALTERAÇÃO: Para desenvolvimento, assumir sempre conectado
+      return true;
     }
   }
 }
